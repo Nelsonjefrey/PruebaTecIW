@@ -14,5 +14,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $usuariosActivos = \App\Usuario::where('codigo', 1)->get();
+    $usuariosInactivos = \App\Usuario::where('codigo', 2)->get();
+    $usuariosEspera = \App\Usuario::where('codigo', 3)->get();
+
+    return view('form.form', compact('usuariosActivos', 'usuariosInactivos', 'usuariosEspera'));
 });
+Route::patch('/edit/{id}', 'UsuarioController@update');
+Route::get('/delete/{id}', 'UsuarioController@destroy');
+Route::post('analizarTxt', 'UsuarioController@analizarTxt');
